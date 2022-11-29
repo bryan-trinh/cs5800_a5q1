@@ -88,20 +88,10 @@ public class LoginView extends JFrame implements ActionListener {
 		if (event.getSource() == this.buttonSubmit) {
 			try {
 				
-				String userName = txtUserName.getText();
-				String password = txtPassword.getText();
-				
-				if (userName.equals("")) {
-					throw new MessageException("Username not informed.");
-				} else if (password.equals("")) {
-					throw new MessageException("Password not informed.");
-				} 
-				
-				User user = User.getInstance();
-				user.setUserName(userName);
-				user.setPassword(password);
-				
-				if (!(LoginBusiness.getInstance().verifyCredentials(user))) {
+				LoginBusiness.getInstance().setUserName(txtUserName.getText());
+				LoginBusiness.getInstance().setPassword(txtPassword.getText());
+					
+				if (!(LoginBusiness.getInstance().verifyCredentials())) {
 					throw new MessageException("Incorrect credentials.");
 				} else {
 					new LoginSuccessView(txtUserName.getText());

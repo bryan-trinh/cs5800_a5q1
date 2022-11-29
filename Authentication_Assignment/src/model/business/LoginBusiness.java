@@ -2,6 +2,7 @@ package model.business;
 import java.sql.SQLException;
 
 import model.dataccess.LoginDataAccess;
+import model.entities.MessageException;
 import model.entities.User;
 
 public class LoginBusiness{
@@ -13,7 +14,17 @@ public class LoginBusiness{
 	public static LoginBusiness getInstance() {
 		return lb;
 	}
-	public boolean verifyCredentials(User user) throws ClassNotFoundException, SQLException {
+	public boolean verifyCredentials() throws ClassNotFoundException, SQLException {
+		if (userName.equals("")) {
+			throw new MessageException("Username not informed.");
+		} else if (password.equals("")) {
+			throw new MessageException("Password not informed.");
+		}
+		
+		User user = User.getInstance();
+		user.setUserName(userName);
+		user.setPassword(password);
+		
 		return LoginDataAccess.getInstance().verifyCredentials(user);
 	}
 	

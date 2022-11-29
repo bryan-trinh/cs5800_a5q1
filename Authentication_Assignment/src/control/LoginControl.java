@@ -27,20 +27,10 @@ public class LoginControl extends HttpServlet {
 		
 		try {
 			
-			String userName = request.getParameter("username");
-			String password = request.getParameter("password");
-			
-			if (userName.equals("")) {
-				throw new MessageException("Username not informed.");
-			} else if (password.equals("")) {
-				throw new MessageException("Password not informed.");
-			} 
-			
-			User user = User.getInstance();
-			user.setUserName(userName);
-			user.setPassword(password);
+			LoginBusiness.getInstance().setUserName(request.getParameter("username"));
+			LoginBusiness.getInstance().setPassword(request.getParameter("password"));
 				
-			if (!(LoginBusiness.getInstance().verifyCredentials(user))) {
+			if (!(LoginBusiness.getInstance().verifyCredentials())) {
 				throw new MessageException("Incorrect credentials.");
 			} else {
 				request.setAttribute("Username", request.getParameter("username"));
